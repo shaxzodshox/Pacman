@@ -32,41 +32,33 @@
             android:id="@+id/burger"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/burger"
-            />
+            android:src="@drawable/burger" />
 
         <ImageView
             android:id="@+id/donut"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/donut"
-            android:visibility="invisible"
-            />
+            android:src="@drawable/donut" />
 
         <ImageView
             android:id="@+id/ice_cream"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ice_cream"
-            />
-
+            android:src="@drawable/ice_cream" />
 
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/bomb"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/bomb1"
-            />
+            android:src="@drawable/bomb1" />
 
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/bat"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/bat"
-            android:visibility="invisible"
-            />
+            android:src="@drawable/bat" />
     </FrameLayout>
 
 

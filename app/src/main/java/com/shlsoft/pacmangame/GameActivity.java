@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.Timer;
+import java.util.TimerTask;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -35,7 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private float bombX, bombY;
 
     //Class
-    private Timer timer = new Timer();
+    private Timer timer;
     private Handler handler = new Handler();
 
     //Status
@@ -53,6 +55,46 @@ public class GameActivity extends AppCompatActivity {
         startGame();
     }
 
+    public void changePosition(){
+        //Move Pacman
+        if(action_flg){
+            //Touching
+            pacmanX += 20;
+            pacman.setImageDrawable(pacmanImgRight);
+        }
+        else{
+            //Releasing
+            pacmanX -= 20;
+            pacman.setImageDrawable(pacmanImgLeft);
+        }
+
+        //Check box position
+        if(pacmanX < 0){
+            pacmanX = 0;
+            pacman.setImageDrawable(pacmanImgRight);
+        }
+
+        if(pacmanX > game_frame.getWidth() - pacman.getWidth()){
+            pacmanX = game_frame.getWidth() - pacman.getWidth();
+            pacman.setImageDrawable(pacmanImgLeft);
+        }
+
+        pacman.setX(pacmanX);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(start_flg){
+            if(event.getAction() == MotionEvent.ACTION_DOWN){ //pressed gesture has started
+                action_flg = true;
+            }
+            else if(event.getAction() == MotionEvent.ACTION_UP){ //pressed gesture has finished
+                action_flg = false;
+            }
+        }
+        return true;
+    }
+
     private void startGame() {
         start_flg = true;
         if (frameHeight == 0) {
@@ -65,7 +107,33 @@ public class GameActivity extends AppCompatActivity {
             pacmanY = pacman.getY();
         }
 
+        pacman.setX(0.0f); //initial position of the pacman
 
+        //initial positions of the objects
+        burger.setY(3000.0f); //outside the screen
+        ice_cream.setY(3000.0f);
+        donut.setY(3000.0f);
+        bomb.setY(3000.0f);
+        bat.setY(3000.0f);
+
+        burgerY = burger.getY();
+        iceCreamY = ice_cream.getY();
+        donutY = donut.getY();
+        bombY = bomb.getY();
+        batY = bat.getY();
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        changePosition();
+                    }
+                });
+            }
+        },0,20);
     }
 
     private void initViews() {
