@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,17 +30,17 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout startLayout;
 
     // Image
-    private ImageView box, black, orange, pink;
-    private Drawable imageBoxRight, imageBoxLeft;
+    private ImageView pacman, bomb, burger, donut;
+    private Drawable imagePacmanRight, imagePacmanLeft;
 
     // Size
-    private int boxSize;
+    private int pacmanSize;
 
     // Position
-    private float boxX, boxY;
-    private float blackX, blackY;
-    private float orangeX, orangeY;
-    private float pinkX, pinkY;
+    private float pacmanX, pacmanY;
+    private float bombX, bombY;
+    private float burgerX, burgerY;
+    private float donutX, donutY;
 
     // Score
     private TextView scoreLabel, highScoreLabel;
@@ -52,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
     // Status
     private boolean start_flg = false;
     private boolean action_flg = false;
-    private boolean pink_flg = false;
+    private boolean donut_flg = false;
 
 
     @Override
@@ -62,15 +64,15 @@ public class GameActivity extends AppCompatActivity {
 
         gameFrame = findViewById(R.id.gameFrame);
         startLayout = findViewById(R.id.startLayout);
-        box = findViewById(R.id.box);
-        black = findViewById(R.id.black);
-        orange = findViewById(R.id.orange);
-        pink = findViewById(R.id.pink);
+        pacman = findViewById(R.id.pacman);
+        bomb = findViewById(R.id.bomb);
+        burger = findViewById(R.id.burger);
+        donut = findViewById(R.id.donut);
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highScoreLabel);
 
-        imageBoxLeft = getResources().getDrawable(R.drawable.pacman_left);
-        imageBoxRight = getResources().getDrawable(R.drawable.pacman_right);
+        imagePacmanLeft = getResources().getDrawable(R.drawable.pacman_left);
+        imagePacmanRight = getResources().getDrawable(R.drawable.pacman_right);
 
         // High Score
         settings = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
@@ -85,38 +87,38 @@ public class GameActivity extends AppCompatActivity {
         timeCount += 20;
 
         // Orange
-        orangeY += 12;
+        burgerY += 24;
 
-        float orangeCenterX = orangeX + orange.getWidth() / 2;
-        float orangeCenterY = orangeY + orange.getHeight() / 2;
+        float burgerCenterX = burgerX + burger.getWidth() / 2;
+        float burgerCenterY = burgerY + burger.getHeight() / 2;
 
-        if (hitCheck(orangeCenterX, orangeCenterY)) {
-            orangeY = frameHeight + 100;
+        if (hitCheck(burgerCenterX, burgerCenterY)) {
+            burgerY = frameHeight + 100;
             score += 10;
         }
 
-        if (orangeY > frameHeight) {
-            orangeY = -100;
-            orangeX = (float) Math.floor(Math.random() * (frameWidth - orange.getWidth()));
+        if (burgerY > frameHeight) {
+            burgerY = -100;
+            burgerX = (float) Math.floor(Math.random() * (frameWidth - burger.getWidth()));
         }
-        orange.setX(orangeX);
-        orange.setY(orangeY);
+        burger.setX(burgerX);
+        burger.setY(burgerY);
 
         // Pink
-        if (!pink_flg && timeCount % 10000 == 0) {
-            pink_flg = true;
-            pinkY = -20;
-            pinkX = (float) Math.floor(Math.random() * (frameWidth - pink.getWidth()));
+        if (!donut_flg && timeCount % 10000 == 0) {
+            donut_flg = true;
+            donutY = -24;
+            donutX = (float) Math.floor(Math.random() * (frameWidth - donut.getWidth()));
         }
 
-        if (pink_flg) {
-            pinkY += 20;
+        if (donut_flg) {
+            donutY += 24;
 
-            float pinkCenterX = pinkX + pink.getWidth() / 2;
-            float pinkCenterY = pinkY + pink.getWidth() / 2;
+            float donutCenterX = donutX + donut.getWidth() / 2;
+            float donutCenterY = donutY + donut.getWidth() / 2;
 
-            if (hitCheck(pinkCenterX, pinkCenterY)) {
-                pinkY = frameHeight + 30;
+            if (hitCheck(donutCenterX, donutCenterY)) {
+                donutY = frameHeight + 30;
                 score += 30;
                 // Change FrameWidth
                 if (initialFrameWidth > frameWidth * 110 / 100) {
@@ -125,67 +127,67 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
 
-            if (pinkY > frameHeight) pink_flg = false;
-            pink.setX(pinkX);
-            pink.setY(pinkY);
+            if (donutY > frameHeight) donut_flg = false;
+            donut.setX(donutX);
+            donut.setY(donutY);
         }
 
         // Black
-        blackY += 18;
+        bombY += 22;
 
-        float blackCenterX = blackX + black.getWidth() / 2;
-        float blackCenterY = blackY + black.getHeight() / 2;
+        float bombCenterX = bombX + bomb.getWidth() / 2;
+        float bombCenterY = bombY + bomb.getHeight() / 2;
 
-        if (hitCheck(blackCenterX, blackCenterY)) {
-            blackY = frameHeight + 100;
+        if (hitCheck(bombCenterX, bombCenterY)) {
+            bombY = frameHeight + 100;
 
             // Change FrameWidth
             frameWidth = frameWidth * 80 / 100;
             changeFrameWidth(frameWidth);
-            if (frameWidth <= boxSize) {
+            if (frameWidth <= pacmanSize) {
                 gameOver();
             }
 
         }
 
-        if (blackY > frameHeight) {
-            blackY = -100;
-            blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
+        if (bombY > frameHeight) {
+            bombY = -100;
+            bombX = (float) Math.floor(Math.random() * (frameWidth - bomb.getWidth()));
         }
 
-        black.setX(blackX);
-        black.setY(blackY);
+        bomb.setX(bombX);
+        bomb.setY(bombY);
 
         // Move Box
         if (action_flg) {
             // Touching
-            boxX += 14;
-            box.setImageDrawable(imageBoxRight);
+            pacmanX += 20;
+            pacman.setImageDrawable(imagePacmanRight);
         } else {
             // Releasing
-            boxX -= 14;
-            box.setImageDrawable(imageBoxLeft);
+            pacmanX -= 20;
+            pacman.setImageDrawable(imagePacmanLeft);
         }
 
         // Check box position.
-        if (boxX < 0) {
-            boxX = 0;
-            box.setImageDrawable(imageBoxRight);
+        if (pacmanX < 0) {
+            pacmanX = 0;
+            pacman.setImageDrawable(imagePacmanRight);
         }
-        if (frameWidth - boxSize < boxX) {
-            boxX = frameWidth - boxSize;
-            box.setImageDrawable(imageBoxLeft);
+        if (frameWidth - pacmanSize < pacmanX) {
+            pacmanX = frameWidth - pacmanSize;
+            pacman.setImageDrawable(imagePacmanLeft);
         }
 
-        box.setX(boxX);
+        pacman.setX(pacmanX);
 
         scoreLabel.setText("Score : " + score);
 
     }
 
     public boolean hitCheck(float x, float y) {
-        if (boxX <= x && x <= boxX + boxSize &&
-                boxY <= y && y <= frameHeight) {
+        if (pacmanX <= x && x <= pacmanX + pacmanSize &&
+                pacmanY <= y && y <= frameHeight) {
             return true;
         }
         return false;
@@ -213,10 +215,10 @@ public class GameActivity extends AppCompatActivity {
         changeFrameWidth(initialFrameWidth);
 
         startLayout.setVisibility(View.VISIBLE);
-        box.setVisibility(View.INVISIBLE);
-        black.setVisibility(View.INVISIBLE);
-        orange.setVisibility(View.INVISIBLE);
-        pink.setVisibility(View.INVISIBLE);
+        pacman.setVisibility(View.INVISIBLE);
+        bomb.setVisibility(View.INVISIBLE);
+        burger.setVisibility(View.INVISIBLE);
+        donut.setVisibility(View.INVISIBLE);
 
         // Update High Score
         if (score > highScore) {
@@ -252,26 +254,26 @@ public class GameActivity extends AppCompatActivity {
             frameWidth = gameFrame.getWidth();
             initialFrameWidth = frameWidth;
 
-            boxSize = box.getHeight();
-            boxX = box.getX();
-            boxY = box.getY();
+            pacmanSize = pacman.getHeight();
+            pacmanX = pacman.getX();
+            pacmanY = pacman.getY();
         }
 
         frameWidth = initialFrameWidth;
 
-        box.setX(0.0f);
-        black.setY(3000.0f);
-        orange.setY(3000.0f);
-        pink.setY(3000.0f);
+        pacman.setX(0.0f);
+        bomb.setY(3000.0f);
+        burger.setY(3000.0f);
+        donut.setY(3000.0f);
 
-        blackY = black.getY();
-        orangeY = orange.getY();
-        pinkY = pink.getY();
+        bombY = bomb.getY();
+        burgerY = burger.getY();
+        donutY = donut.getY();
 
-        box.setVisibility(View.VISIBLE);
-        black.setVisibility(View.VISIBLE);
-        orange.setVisibility(View.VISIBLE);
-        pink.setVisibility(View.VISIBLE);
+        pacman.setVisibility(View.VISIBLE);
+        bomb.setVisibility(View.VISIBLE);
+        burger.setVisibility(View.VISIBLE);
+        donut.setVisibility(View.VISIBLE);
 
         timeCount = 0;
         score = 0;
@@ -301,7 +303,6 @@ public class GameActivity extends AppCompatActivity {
             finish();
         }
     }
-
 
 
 }
