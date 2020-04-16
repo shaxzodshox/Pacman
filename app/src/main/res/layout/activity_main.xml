@@ -1,20 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/bg_blur"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/tv_player_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START GAME"
-        android:layout_centerInParent="true"
-        android:background="#03A9F4"
-        android:textColor="@android:color/white"
-        android:onClick="startGame"
+        android:textColor="@color/normal_blue"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:text="ISHTIROKCHI:"
+        />
+    <TextView
+        android:id="@+id/tv_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/clicked_blue"
+        android:textSize="14sp"
+        android:text=""
+        android:layout_marginBottom="8dp"
         />
 
-</RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@color/normal_blue"
+        android:text="BOSHLASH"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:drawableEnd="@drawable/play_icon"
+        android:padding="16dp"
+        />
+    <Button
+        android:id="@+id/btn_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@color/normal_blue"
+        android:text="ISHTIROKCHI"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:drawableEnd="@drawable/user_icon"
+        android:padding="16dp"
+        />
+
+    <Button
+        android:id="@+id/btn_highscores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@color/normal_blue"
+        android:text="YUQORI BALLAR"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:drawableEnd="@drawable/scores_icon"
+        android:padding="16dp"
+        />
+
+    <Button
+        android:id="@+id/btn_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@color/normal_blue"
+        android:text="O'YIN QOIDALARI"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:drawableEnd="@drawable/info_icon"
+        android:padding="16dp"
+        />
+
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_effect"
+        android:textColor="@color/normal_blue"
+        android:text="CHIQISH"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="8dp"
+        android:drawableEnd="@drawable/exit_icon"
+        android:padding="16dp"
+        />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/menu_bat"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/bat"
+        />
+</LinearLayout>
