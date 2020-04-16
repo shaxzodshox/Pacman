@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:layout_width="230dp"
+        android:layout_height="match_parent"
+        android:background="@color/frameBg"
+        android:layout_centerHorizontal="true"
+        >
+        <ImageView
+            android:id="@+id/pacman"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/pacman_right"
+            android:layout_gravity="bottom"
+            />
+
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>
