@@ -13,12 +13,51 @@
         android:background="@color/frameBg"
         android:layout_centerHorizontal="true"
         >
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bg_animated"
+            android:scaleType="centerCrop"
+            android:alpha="0.1"
+            />
         <ImageView
             android:id="@+id/pacman"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/pacman_right"
             android:layout_gravity="bottom"
+            />
+
+        <ImageView
+            android:id="@+id/burger"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/burger"
+            android:visibility="invisible"
+            />
+        <ImageView
+            android:id="@+id/donut"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/donut"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/ice_cream"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ice_cream"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/poison"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/poison"
+            android:visibility="invisible"
             />
 
 
