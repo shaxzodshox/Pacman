@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg"
-    tools:context=".MainActivity">
+    tools:context=".GameActivity">
 
     <TextView
         android:id="@+id/scoreLabel"
@@ -22,12 +22,10 @@
 
     <FrameLayout
         android:id="@+id/gameFrame"
-        android:layout_width="260dp"
+        android:layout_width="230dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="match_parent"
         android:background="@color/frameBg">
-
-
 
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="match_parent"
@@ -37,26 +35,42 @@
             android:src="@drawable/bg_animated" />
 
         <ImageView
-            android:id="@+id/pacman"
+        android:id="@+id/pacman"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:src="@drawable/pacman_right"
+        android:visibility="invisible"
+        />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/bomb"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:src="@drawable/pacman_right"
+            android:src="@drawable/bomb1"
+            android:visibility="invisible"/>
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/bat"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/bat"
             android:visibility="invisible"
             />
 
         <ImageView
-            android:id="@+id/bomb"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/bomb"
-            android:visibility="invisible"/>
+        android:id="@+id/burger"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/burger"
+        android:visibility="invisible"
+        />
 
         <ImageView
-            android:id="@+id/burger"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/burger"
+            android:id="@+id/poison"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/poison"
             android:visibility="invisible"
             />
 

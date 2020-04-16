@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+import pl.droidsonroids.gif.GifImageView;
+
 
 public class GameActivity extends AppCompatActivity {
 
@@ -30,7 +33,8 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout startLayout;
 
     // Image
-    private ImageView pacman, bomb, burger, donut;
+    private ImageView pacman, burger, donut, poison;
+    private GifImageView bat, bomb;
     private Drawable imagePacmanRight, imagePacmanLeft;
 
     // Size
@@ -41,6 +45,8 @@ public class GameActivity extends AppCompatActivity {
     private float bombX, bombY;
     private float burgerX, burgerY;
     private float donutX, donutY;
+    private float batX, batY;
+    private float poisonX, poisonY;
 
     // Score
     private TextView scoreLabel, highScoreLabel;
@@ -55,7 +61,8 @@ public class GameActivity extends AppCompatActivity {
     private boolean start_flg = false;
     private boolean action_flg = false;
     private boolean donut_flg = false;
-
+    private boolean bat_flg = false;
+    private boolean poison_flg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +73,10 @@ public class GameActivity extends AppCompatActivity {
         startLayout = findViewById(R.id.startLayout);
         pacman = findViewById(R.id.pacman);
         bomb = findViewById(R.id.bomb);
+        bat = findViewById(R.id.bat);
         burger = findViewById(R.id.burger);
         donut = findViewById(R.id.donut);
+        poison = findViewById(R.id.poison);
         scoreLabel = findViewById(R.id.scoreLabel);
         highScoreLabel = findViewById(R.id.highScoreLabel);
 
@@ -86,8 +95,8 @@ public class GameActivity extends AppCompatActivity {
         // Add timeCount
         timeCount += 20;
 
-        // Orange
-        burgerY += 24;
+        // Burger
+        burgerY += 42;
 
         float burgerCenterX = burgerX + burger.getWidth() / 2;
         float burgerCenterY = burgerY + burger.getHeight() / 2;
@@ -104,8 +113,8 @@ public class GameActivity extends AppCompatActivity {
         burger.setX(burgerX);
         burger.setY(burgerY);
 
-        // Pink
-        if (!donut_flg && timeCount % 10000 == 0) {
+        // Donut
+        if (!donut_flg && timeCount % 20000 == 0) {
             donut_flg = true;
             donutY = -24;
             donutX = (float) Math.floor(Math.random() * (frameWidth - donut.getWidth()));
@@ -132,8 +141,55 @@ public class GameActivity extends AppCompatActivity {
             donut.setY(donutY);
         }
 
-        // Black
-        bombY += 22;
+        //Bat
+        if (!bat_flg && timeCount % 13000 == 0) {
+            bat_flg = true;
+            batY = -20;
+            batX = (float) Math.floor(Math.random() * (frameWidth - bat.getWidth()));
+        }
+
+        if (bat_flg) {
+            batY += 28;
+
+            float batCenterX = batX + bat.getWidth() / 2;
+            float batCenterY = batY + bat.getWidth() / 2;
+
+            if (hitCheck(batCenterX, batCenterY)) {
+                //Do some action if the touch to the bat
+                gameOver();
+            }
+
+            if (batY > frameHeight) bat_flg = false;
+            bat.setX(batX);
+            bat.setY(batY);
+        }
+
+        //Poison
+        if (!poison_flg && timeCount % 14000 == 0) {
+            poison_flg = true;
+            poisonY = -34;
+            poisonX = (float) Math.floor(Math.random() * (frameWidth - poison.getWidth()));
+        }
+
+        if (poison_flg) {
+            poisonY += 34;
+
+            float poisonCenterX = poisonX + poison.getWidth() / 2;
+            float poisonCenterY = poisonY + poison.getWidth() / 2;
+
+            if (hitCheck(poisonCenterX, poisonCenterY)) {
+                poisonY += frameHeight + 100;
+                //Do some action if the touch to the poison
+                score = 0;
+            }
+
+            if (poisonY > frameHeight) poison_flg = false;
+            poison.setX(poisonX);
+            poison.setY(poisonY);
+        }
+
+        // Bomb
+        bombY += 38;
 
         float bombCenterX = bombX + bomb.getWidth() / 2;
         float bombCenterY = bombY + bomb.getHeight() / 2;
@@ -158,18 +214,18 @@ public class GameActivity extends AppCompatActivity {
         bomb.setX(bombX);
         bomb.setY(bombY);
 
-        // Move Box
+        // Move Pacman
         if (action_flg) {
             // Touching
-            pacmanX += 20;
+            pacmanX += 26;
             pacman.setImageDrawable(imagePacmanRight);
         } else {
             // Releasing
-            pacmanX -= 20;
+            pacmanX -= 26;
             pacman.setImageDrawable(imagePacmanLeft);
         }
 
-        // Check box position.
+        // Check pacman position.
         if (pacmanX < 0) {
             pacmanX = 0;
             pacman.setImageDrawable(imagePacmanRight);
@@ -219,6 +275,8 @@ public class GameActivity extends AppCompatActivity {
         bomb.setVisibility(View.INVISIBLE);
         burger.setVisibility(View.INVISIBLE);
         donut.setVisibility(View.INVISIBLE);
+        bat.setVisibility(View.INVISIBLE);
+        poison.setVisibility(View.INVISIBLE);
 
         // Update High Score
         if (score > highScore) {
@@ -265,15 +323,21 @@ public class GameActivity extends AppCompatActivity {
         bomb.setY(3000.0f);
         burger.setY(3000.0f);
         donut.setY(3000.0f);
+        bat.setY(3000.0f);
+        poison.setY(3000.0f);
 
         bombY = bomb.getY();
         burgerY = burger.getY();
         donutY = donut.getY();
+        batY = bat.getY();
+        poisonY = poison.getY();
 
         pacman.setVisibility(View.VISIBLE);
         bomb.setVisibility(View.VISIBLE);
         burger.setVisibility(View.VISIBLE);
         donut.setVisibility(View.VISIBLE);
+        bat.setVisibility(View.VISIBLE);
+        poison.setVisibility(View.VISIBLE);
 
         timeCount = 0;
         score = 0;
